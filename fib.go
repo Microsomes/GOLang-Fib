@@ -33,26 +33,29 @@ func findCache(x int) (int, error) {
 	return 0, errors.New("Cannot find in cache")
 }
 
-// func fib(x int) int {
-// 	if x <= 3 {
-// 		return 1
-// 	} else {
-// 		return fib(x-1) + fib(x-2)
-// 	}
+func fib(x int) int {
+	var localyix = x
+	if x <= 3 {
+		return 1
+	} else {
 
-// }
+		cacheVal, err := findCache(x)
 
-func main() {
-	x := append(allCache, cache{x: 1, value: 20})
-	allCache = x
-	fmt.Println(x)
+		if err != nil {
+			var calcVal = fib(x-1) + fib(x-2)
+			addToCache(localyix, calcVal)
+			return calcVal
 
-	cacheVal, err := findCache(1)
-	if err != nil {
-		fmt.Printf("Their is an error in the code")
+		} else {
+			return cacheVal
+		}
+
 	}
 
-	fmt.Println(cacheVal)
-	// x := fib(100)
-	// fmt.Printf("%d", x)
+}
+
+func main() {
+
+	x := fib(50)
+	fmt.Printf("The value is:%d", x)
 }
